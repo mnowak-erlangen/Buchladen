@@ -15,6 +15,7 @@ $pdo = new PDO('mysql:host=localhost;dbname=buchladen', 'root', '');
 
 if(isset($_GET['register'])) {
     $error = false;
+    $errorMessage = 'Fehlermeldungen: <br>';
 
     $benutzerid = $_POST['benutzerid'];
     $email = $_POST['email'];
@@ -30,43 +31,37 @@ if(isset($_GET['register'])) {
     $passwort2 = $_POST['passwort2'];
   
     if(strlen($benutzerid) == 0) {
-        echo 'Bitte eine BenutzerID angeben<br>';
-        $error = true;
+        $errorMessage += 'Bitte eine BenutzerID angeben<br>';
     }
     if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo 'Bitte eine gültige E-Mail-Adresse eingeben<br>';
-        $error = true;
+        $errorMessage += 'Bitte eine gültige E-Mail-Adresse eingeben<br>';
     }     
     if(strlen($vorname) == 0) {
-        echo 'Bitte einen Vornamen angeben<br>';
-        $error = true;
+        $errorMessage += 'Bitte einen Vornamen angeben<br>';
     }
     if(strlen($nachname) == 0) {
-        echo 'Bitte einen Nachnamen angeben<br>';
-        $error = true;
+        $errorMessage += 'Bitte einen Nachnamen angeben<br>';
     }
     if(strlen($plz) == 0) {
-        echo 'Bitte eine Postleitzahl angeben<br>';
-        $error = true;
+        $errorMessage += 'Bitte eine Postleitzahl angeben<br>';
     }
     if(strlen($ort) == 0) {
-        echo 'Bitte einen Ort angeben<br>';
-        $error = true;
+        $errorMessage += 'Bitte einen Ort angeben<br>';
     }
     if(strlen($strasse) == 0) {
-        echo 'Bitte eine Straße angeben<br>';
-        $error = true;
+        $errorMessage += 'Bitte eine Straße angeben<br>';
     }
     if(strlen($hausnr) == 0) {
-        echo 'Bitte eine Hausnummer angeben<br>';
-        $error = true;
+        $errorMessage += 'Bitte eine Hausnummer angeben<br>';
     }
     if(strlen($passwort) == 0) {
-        echo 'Bitte ein Passwort angeben<br>';
-        $error = true;
+        $errorMessage += 'Bitte ein Passwort angeben<br>';
     }
     if($passwort != $passwort2) {
-        echo 'Die Passwörter müssen übereinstimmen<br>';
+        $errorMessage += 'Die Passwörter müssen übereinstimmen<br>';
+    }
+
+    if(strlen($errorMessage) == 0) {
         $error = true;
     }
 
@@ -105,7 +100,7 @@ if(isset($_GET['register'])) {
             echo 'Du wurdest erfolgreich registriert. <a href="login.php">Zum Login</a>';
             $showFormular = false;
         } else {
-            echo 'Beim Abspeichern ist leider ein Fehler aufgetreten<br>';
+            echo 'Beim Abspeichern ist leider ein Fehler aufgetreten.<br>';
         }
     } 
 }
