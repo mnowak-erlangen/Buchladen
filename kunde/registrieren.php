@@ -1,6 +1,6 @@
 <?php 
 session_start();
-$pdo = new PDO('mysql:host=localhost;dbname=test', 'root', '');
+$pdo = new PDO('mysql:host=localhost;dbname=buchladen', 'root', '');
 ?>
 <!DOCTYPE html> 
 <html> 
@@ -10,10 +10,12 @@ $pdo = new PDO('mysql:host=localhost;dbname=test', 'root', '');
 <body>
  
 <?php
-$showFormular = true; //Variable ob das Registrierungsformular anezeigt werden soll
  
+ $showFormular = true; //Variable ob das Registrierungsformular anezeigt werden soll
+
 if(isset($_GET['register'])) {
     $error = false;
+
     $benutzerid = $_POST['benutzerid'];
     $email = $_POST['email'];
     $vorname = $_POST['vorname'];
@@ -97,8 +99,8 @@ if(isset($_GET['register'])) {
         $passwort_hash = password_hash($passwort, PASSWORD_DEFAULT);
         
         $statement = $pdo->prepare("INSERT INTO kunde (benutzerid, passwort, vorname, nachname, strasse, hausnr, plz, ort, email) VALUES (:benutzerid, :passwort, :vorname, :nachname :strasse, :hausnr, :plz, :ort, :email)");
-        $result = $statement->execute(array('benutzerid' => $benutzerid, 'passwort' => $passwort_hash, 'vorname' => $vorname, 'nachname' => $nachname, 'strasse' => $strasse, 'plz' => $plz, 'ort' => $ort, 'email' => $email));
-        
+        $result = $statement->execute(array('benutzerid' => $benutzerid, 'passwort' => $passwort_hash, 'vorname' => $vorname, 'nachname' => $nachname, 'strasse' => $strasse, 'hausnr' => $hausnr, 'plz' => $plz, 'ort' => $ort, 'email' => $email));
+
         if($result) {        
             echo 'Du wurdest erfolgreich registriert. <a href="login.php">Zum Login</a>';
             $showFormular = false;
@@ -107,26 +109,35 @@ if(isset($_GET['register'])) {
         }
     } 
 }
- 
+
 if($showFormular) {
 ?>
- 
 <form action="?register=1" method="post">
-E-Mail:<br>
-<input type="email" size="40" maxlength="250" name="email"><br><br>
- 
-Dein Passwort:<br>
-<input type="password" size="40"  maxlength="250" name="passwort"><br>
- 
-Passwort wiederholen:<br>
-<input type="password" size="40" maxlength="250" name="passwort2"><br><br>
- 
-<input type="submit" value="Abschicken">
+    Benutzername:<br>
+    <input type="text" size="40" maxlength="50" name="benutzerid"><br><br>
+    Vorname:<br>
+    <input type="text" size="40" maxlength="50" name="vorname"><br><br>
+    Nachname:<br>
+    <input type="text" size="40" maxlength="50" name="nachname"><br><br>
+    Postleitzahl:<br>
+    <input type="text" size="40" maxlength="5" name="plz"><br><br>
+    Ort:<br>
+    <input type="text" size="40" maxlength="50" name="ort"><br><br>
+    Straße:<br>
+    <input type="text" size="40" maxlength="50" name="strasse"><br><br>
+    Hausnummer:<br>
+    <input type="text" size="40" maxlength="5" name="hausnr"><br><br>
+    E-Mail:<br>
+    <input type="email" size="40" maxlength="50" name="email"><br><br>
+    Dein Passwort:<br>
+    <input type="password" size="40"  maxlength="250" name="passwort"><br>
+    Passwort wiederholen:<br>
+    <input type="password" size="40" maxlength="250" name="passwort2"><br><br>
+    
+    <input type="submit" value="Abschicken">
 </form>
- 
 <?php
 } //Ende von if($showFormular)
 ?>
- 
-</body>
+    </body>
 </html>
