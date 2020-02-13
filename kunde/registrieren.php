@@ -1,21 +1,24 @@
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+?>
 <?php 
-session_start();
-$pdo = new PDO('mysql:host=localhost;dbname=buchladen', 'root', '');
+    session_start();
+    $db = mysqli_connect("localhost", "root", "", "buchladen");
 ?>
 <!DOCTYPE html> 
-<html> 
-<head>
-  <title>Registrierung</title>    
-</head> 
-<body>
- 
+    <html> 
+        <head>
+            <title>Registrierung</title>    
+        </head> 
+        <body>
 <?php
  
  $showFormular = true; //Variable ob das Registrierungsformular anezeigt werden soll
 
 if(isset($_GET['register'])) {
-    $error = false;
-    $errorMessage = 'Fehlermeldungen: <br>';
+    $vorhanden = false;
 
     $benutzerid = $_POST['benutzerid'];
     $email = $_POST['email'];
@@ -29,80 +32,40 @@ if(isset($_GET['register'])) {
     
     $passwort = $_POST['passwort'];
     $passwort2 = $_POST['passwort2'];
-  
-    if(strlen($benutzerid) == 0) {
-        $errorMessage += 'Bitte eine BenutzerID angeben<br>';
-    }
-    if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errorMessage += 'Bitte eine gültige E-Mail-Adresse eingeben<br>';
-    }     
-    if(strlen($vorname) == 0) {
-        $errorMessage += 'Bitte einen Vornamen angeben<br>';
-    }
-    if(strlen($nachname) == 0) {
-        $errorMessage += 'Bitte einen Nachnamen angeben<br>';
-    }
-    if(strlen($plz) == 0) {
-        $errorMessage += 'Bitte eine Postleitzahl angeben<br>';
-    }
-    if(strlen($ort) == 0) {
-        $errorMessage += 'Bitte einen Ort angeben<br>';
-    }
-    if(strlen($strasse) == 0) {
-        $errorMessage += 'Bitte eine Straße angeben<br>';
-    }
-    if(strlen($hausnr) == 0) {
-        $errorMessage += 'Bitte eine Hausnummer angeben<br>';
-    }
-    if(strlen($passwort) == 0) {
-        $errorMessage += 'Bitte ein Passwort angeben<br>';
-    }
-    if($passwort != $passwort2) {
-        $errorMessage += 'Die Passwörter müssen übereinstimmen<br>';
-    }
 
-    if(strlen($errorMessage) == 0) {
-        $error = true;
-    }
 
     //Überprüfe, dass der Nutzername noch nicht registriert wurde
-    if(!$error) { 
-        $statement = $pdo->prepare("SELECT * FROM kunde WHERE benutzerid = :benutzerid");
-        $result = $statement->execute(array('benutzerid' => $benutzerid));
-        $user = $statement->fetch();
-        
-        if($user !== false) {
-            echo 'Dieser Nutzername ist bereits vergeben<br>';
-            $error = true;
-        }    
-    }
-    
-    //Überprüfe, dass die E-Mail-Adresse noch nicht registriert wurde
-    if(!$error) { 
-        $statement = $pdo->prepare("SELECT * FROM users WHERE email = :email");
-        $result = $statement->execute(array('email' => $email));
-        $user = $statement->fetch();
-        
-        if($user !== false) {
-            echo 'Diese E-Mail-Adresse ist bereits vergeben<br>';
-            $error = true;
-        }    
-    }
-    
-    //Keine Fehler, wir können den Nutzer registrieren
-    if(!$error) {    
-        $passwort_hash = password_hash($passwort, PASSWORD_DEFAULT);
-        
-        $statement = $pdo->prepare("INSERT INTO kunde (benutzerid, passwort, vorname, nachname, strasse, hausnr, plz, ort, email) VALUES (:benutzerid, :passwort, :vorname, :nachname :strasse, :hausnr, :plz, :ort, :email)");
-        $result = $statement->execute(array('benutzerid' => $benutzerid, 'passwort' => $passwort_hash, 'vorname' => $vorname, 'nachname' => $nachname, 'strasse' => $strasse, 'hausnr' => $hausnr, 'plz' => $plz, 'ort' => $ort, 'email' => $email));
+    $statement = "SELECT count(*) as 'Eintrag' FROM kunde WHERE benutzerid = '$benutzerid'";
+    $result = mysqli_query($db, $statement);
 
+    $eintrag = mysqli_fetch_assoc($result);
+    if ($eintrag['Eintrag'] == 1) {
+       echo 'Dieser Benutzername ist bereits vergeben!<br>';
+       $vorhanden = true;
+    }
+
+    $statement = "SELECT count(*) as 'Eintrag' FROM kunde WHERE email = '$email'";
+    $result = mysqli_query($db, $statement);
+
+    $eintrag = mysqli_fetch_assoc($result);
+    if ($eintrag['Eintrag'] == 1) {
+        echo 'Diese E-Mail-Adresse ist bereits vergeben<br>';
+        $vorhanden = true;
+    }
+
+    if ($vorhanden == false) {
+        $passwort_hash = password_hash($passwort, PASSWORD_DEFAULT);
+        $statement = "INSERT INTO kunde (benutzerid, passwort, vorname, nachname, strasse, hausnr, plz, ort, email) VALUES ('$benutzerid', '$passwort_hash', '$vorname', '$nachname' '$strasse', '$hausnr', '$plz', '$ort', '$email')";
+        $result = mysqli_query($db, $statement);
+        var_dump($result);
+    
         if($result) {        
             echo 'Du wurdest erfolgreich registriert. <a href="login.php">Zum Login</a>';
             $showFormular = false;
         } else {
             echo 'Beim Abspeichern ist leider ein Fehler aufgetreten.<br>';
         }
-    } 
+    }
 }
 
 if($showFormular) {
