@@ -1,8 +1,3 @@
-<?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-?>
 <?php 
     session_start();
     $db = mysqli_connect("localhost", "root", "", "buchladen");
@@ -54,10 +49,8 @@ if(isset($_GET['register'])) {
     }
 
     if ($vorhanden == false) {
-        $passwort_hash = password_hash($passwort, PASSWORD_DEFAULT);
-        $statement = "INSERT INTO kunde (benutzerid, passwort, vorname, nachname, strasse, hausnr, plz, ort, email) VALUES ('$benutzerid', '$passwort_hash', '$vorname', '$nachname' '$strasse', '$hausnr', '$plz', '$ort', '$email')";
+        $statement = "INSERT INTO kunde VALUES ('$benutzerid', '$passwort', '$vorname', '$nachname', '$strasse', '$hausnr', '$plz', '$ort', '$email', 0);";
         $result = mysqli_query($db, $statement);
-        var_dump($result);
     
         if($result) {        
             echo 'Du wurdest erfolgreich registriert. <a href="login.php">Zum Login</a>';
