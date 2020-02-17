@@ -5,12 +5,10 @@
 <!DOCTYPE html> 
     <html> 
         <head>
-            <title>Registrierung</title>    
+            <title>Buchladen</title>    
         </head> 
         <body>
 <?php
- 
- $showFormular = true; //Variable ob das Registrierungsformular anezeigt werden soll
 
 if(isset($_GET['register'])) {
     $vorhanden = false;
@@ -53,42 +51,42 @@ if(isset($_GET['register'])) {
         $result = mysqli_query($db, $statement);
     
         if($result) {        
-            echo 'Du wurdest erfolgreich registriert. <a href="login.php">Zum Login</a>';
-            $showFormular = false;
+            die('Du wurdest erfolgreich registriert. <a href="login.php">Zum Login</a>');
+            ?>
+            <script language="JavaScript" type="text/javascript">
+                setTimeout("location.href='login.php'", 1000);
+            </script>
+            <?php
         } else {
             echo 'Beim Abspeichern ist leider ein Fehler aufgetreten.<br>';
         }
     }
 }
 
-if($showFormular) {
 ?>
-<form action="?register=1" method="post">
-    Benutzername:<br>
-    <input type="text" size="40" maxlength="50" name="benutzerid"><br><br>
-    Vorname:<br>
-    <input type="text" size="40" maxlength="50" name="vorname"><br><br>
-    Nachname:<br>
-    <input type="text" size="40" maxlength="50" name="nachname"><br><br>
-    Postleitzahl:<br>
-    <input type="text" size="40" maxlength="5" name="plz"><br><br>
-    Ort:<br>
-    <input type="text" size="40" maxlength="50" name="ort"><br><br>
-    Straße:<br>
-    <input type="text" size="40" maxlength="50" name="strasse"><br><br>
-    Hausnummer:<br>
-    <input type="text" size="40" maxlength="5" name="hausnr"><br><br>
-    E-Mail:<br>
-    <input type="email" size="40" maxlength="50" name="email"><br><br>
-    Dein Passwort:<br>
-    <input type="password" size="40"  maxlength="250" name="passwort"><br>
-    Passwort wiederholen:<br>
-    <input type="password" size="40" maxlength="250" name="passwort2"><br><br>
-    
-    <input type="submit" value="Abschicken">
-</form>
-<?php
-} //Ende von if($showFormular)
-?>
+        <form action="?register=1" method="post">
+            Benutzername:<br>
+            <input type="text" size="40" maxlength="50" name="benutzerid"><br><br>
+            Vorname:<br>
+            <input type="text" size="40" maxlength="50" name="vorname"><br><br>
+            Nachname:<br>
+            <input type="text" size="40" maxlength="50" name="nachname"><br><br>
+            Postleitzahl:<br>
+            <input type="text" size="40" maxlength="5" name="plz"><br><br>
+            Ort:<br>
+            <input type="text" size="40" maxlength="50" name="ort"><br><br>
+            Straße:<br>
+            <input type="text" size="40" maxlength="50" name="strasse"><br><br>
+            Hausnummer:<br>
+            <input type="text" size="40" maxlength="5" name="hausnr"><br><br>
+            E-Mail:<br>
+            <input type="email" size="40" maxlength="50" name="email"><br><br>
+            Dein Passwort:<br>
+            <input type="password" size="40"  maxlength="250" name="passwort"><br>
+            Passwort wiederholen:<br>
+            <input type="password" size="40" maxlength="250" name="passwort2"><br><br>
+            
+            <input type="submit" value="Abschicken">
+        </form>
     </body>
 </html>

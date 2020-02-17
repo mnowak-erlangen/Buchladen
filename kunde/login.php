@@ -12,7 +12,12 @@ if(isset($_GET['login'])) {
     $eintrag = mysqli_fetch_assoc($result);
     if ($eintrag['Eintrag'] == 1) {
         $_SESSION['userid'] = $benutzerid;
-        die('Login erfolgreich. Weiter zum <a href="buchhandlung.php">Kundenbereich</a>.');
+        die('Login erfolgreich. Weiter zum <a href="buchhandlung.php">Kundenbereich</a>.');#
+        ?>
+        <script language="JavaScript" type="text/javascript">
+            setTimeout("location.href='buchhandlung.php'", 1000);
+        </script>
+        <?php
     } else {
         $errorMessage = "E-Mail oder Passwort ist ungültig<br>";
     }   
@@ -21,7 +26,7 @@ if(isset($_GET['login'])) {
 <!DOCTYPE html> 
  <html> 
     <head>
-        <title>Login</title>    
+        <title>Buchladen</title>    
     </head> 
     <body>
  

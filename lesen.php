@@ -10,7 +10,7 @@ $titel = $eintrag["titel"];
 $url = "buecher/" . $eintrag["verzeichnispfad"];
 
 $files = scandir($url);
-$anzahlSeiten = count($files)-2;
+$anzahlSeiten = count($files) - 2;
 ?>
 
 <html lang="de">
