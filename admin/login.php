@@ -12,7 +12,8 @@ if(isset($_GET['login'])) {
     $eintrag = mysqli_fetch_assoc($result);
     if ($eintrag['Eintrag'] == 1) {
         $_SESSION['userid'] = $benutzerid;
-        die('Login erfolgreich. Weiter zum <a href="buchhandlung.php">Kundenbereich</a>.');
+        $_SESSION['isAdmin'] = true;
+        die('Login erfolgreich. Weiter um <a href="ansicht.php">Bücher bearbeiten</a>.');
     } else {
         $errorMessage = "E-Mail oder Passwort ist ungültig<br>";
     }   
