@@ -19,14 +19,27 @@ $db = mysqli_connect("localhost", "root", "", "buchladen");
         <title>Buchladen</title>    
     <?php
         if (isset($_GET['isbn'])) {
-            $isbn = $_GET['isbn'];
+            $isbn13 = $_GET['isbn'];
 
-            $statement = "DELETE FROM kundebuecher WHERE ISBN13 = '" . $isbn . "';";
-            mysqli_query($db, $statement);
-            $statement = "DELETE FROM buecher WHERE ISBN13 = '" . $isbn . "';";
-            mysqli_query($db, $statement);
+            $statement = "SELECT verzeichnispfad FROM buecher WHERE isbn13 = '" . $isbn13 . "';";
+            $result = mysqli_query($db, $statement);
+            $eintrag = mysqli_fetch_assoc($result);
 
-            echo "<script>alert('Das Buch " . $isbn . " wurde erfolgreich gelöscht!');</script>";
+            $pfad = $eintrag['verzeichnispfad'];
+
+            if (!is_dir("../buecher/" . $pfad)) {
+                shell_exec("RMDIR \"../buecher/" . $pfad . "\" /S /Q");
+
+                $statement = "DELETE FROM kundebuecher WHERE ISBN13 = '" . $isbn13 . "';";
+                mysqli_query($db, $statement);
+                $statement = "DELETE FROM buecher WHERE ISBN13 = '" . $isbn13 . "';";
+                mysqli_query($db, $statement);
+        
+                echo "<script>alert('Das Buch " . $isbn13 . " wurde erfolgreich gelöscht!');</script>";
+            } else {
+                echo "<script>alert('Das Buch " . $isbn13 . " konnte nicht gelöscht werden!');</script>";
+            }
+
         }
 
         $statement = "SELECT * FROM buecher;";

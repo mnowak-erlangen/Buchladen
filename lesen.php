@@ -36,7 +36,7 @@ $anzahlSeiten = count($files) - 2;
             <?php
 				$seite = 1;
 				while ($seite <= $anzahlSeiten) {
-					echo "<div style=\"background-image:url(" . $url . $seite . ".jpg)\"></div>";
+					echo "<div id=\"" . $seite . "\" style=\"background-image:url(" . $url . $seite . ".jpg)\"></div>";
 					$seite = $seite + 1;
 				}
             ?>
