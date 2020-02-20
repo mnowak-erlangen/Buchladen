@@ -12,7 +12,7 @@ if(isset($_GET['login'])) {
     $eintrag = mysqli_fetch_assoc($result);
     if (password_verify($passwort, $eintrag['Eintrag'])) {
         $_SESSION['userid'] = $benutzerid;
-        $statement = "SELECT count(*) as 'isAdmin' FROM kunde WHERE benutzerid like '$benutzerid' AND passwort like '$passwort' AND isAdmin = 1";
+        $statement = "SELECT count(*) as 'isAdmin' FROM kunde WHERE benutzerid like '$benutzerid' AND isAdmin = 1";
         $result = mysqli_query($db, $statement);
         $eintrag = mysqli_fetch_assoc($result);
 

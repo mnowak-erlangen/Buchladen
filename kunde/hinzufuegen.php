@@ -33,6 +33,7 @@ $db = mysqli_connect("localhost", "root", "", "buchladen");
     </head> 
     <body>
         <p><a href="../logout.php">Logout</a> <a href="buchhandlung.php">Zurück zur Buchauswahl</a></p>
+        <h1>Bücher im Shop</h1>
         <table>
             <tr>
                 <th>Titel</th>

@@ -27,6 +27,7 @@
         </head> 
         <body>
         <p><a href="../logout.php">Logout</a> <a href="ansicht.php">zurück zur Übersicht</a></p>
+        <h1>Bücher hochladen</h1>
 <?php
 
 if(isset($_POST['isbn10'])) {

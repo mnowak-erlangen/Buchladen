@@ -31,6 +31,7 @@ $result = mysqli_query($db, $statement);
     </head> 
     <body>
         <p><a href="../logout.php">Logout</a> <a href="hinzufuegen.php">Neue Bücher hinzufügen</a></p>
+        <h1>Deine Bücher</h1>
         <table >
             <tr>
                 <th>Titel</th>

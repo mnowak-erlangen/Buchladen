@@ -47,6 +47,7 @@ $userid = $_SESSION['userid'];
     </head> 
     <body>
         <p><a href="../logout.php">Logout</a> <a href="hochladen.php">neues Buch hochladen</a></p>
+        <h1>Bücherliste</h1>
         <table >
             <tr>
                 <th>ISBN10</th>
