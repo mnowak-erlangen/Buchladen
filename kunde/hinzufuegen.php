@@ -1,10 +1,10 @@
 <?php
 session_start();
 if(!isset($_SESSION['userid'])) {
-    die('Bitte loggen Sie sich zuerst ein. <a href="login.php">Zum Login</a>.');
+    die('Bitte loggen Sie sich zuerst ein. <a href="../index.php">Zum Login</a>.');
     ?>
     <script language="JavaScript" type="text/javascript">
-        setTimeout("location.href='login.php'", 1000);
+        setTimeout("location.href='index.php'", 1000);
     </script>
     <?php
 }
@@ -17,6 +17,7 @@ $db = mysqli_connect("localhost", "root", "", "buchladen");
 <html> 
     <head>
         <title>Buchladen</title>    
+        <link rel="stylesheet" href="../tabelle.css" type="text/css"></link>  
     <?php
         if (isset($_GET['isbn'])) {
             $isbn = $_GET['isbn'];

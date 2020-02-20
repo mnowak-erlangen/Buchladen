@@ -1,5 +1,13 @@
-<?php 
+<?php
     session_start();
+    if(!isset($_SESSION['userid']) && !isset($_SESSION['isAdmin'])) {
+        die('Bitte loggen Sie sich zuerst ein. <a href="../index.php">Zum Login</a>.');
+        ?>
+        <script language="JavaScript" type="text/javascript">
+            setTimeout("location.href='index.php'", 1000);
+        </script>
+        <?php
+    }
     $db = mysqli_connect("localhost", "root", "", "buchladen");
     $userid = $_SESSION['userid'];
 ?>
@@ -7,6 +15,15 @@
     <html> 
         <head>
             <title>Buchladen</title>    
+            <link rel="stylesheet" href="../style.css" type="text/css"></link>
+            <style>
+                a {
+                    padding-top: 12px;
+                    padding-bottom: 12px;
+                    padding-right: 12px;
+                    color: black;
+                }
+            </style>  
         </head> 
         <body>
         <p><a href="../logout.php">Logout</a> <a href="ansicht.php">zurück zur Übersicht</a></p>
@@ -43,16 +60,18 @@ if(isset($_POST['isbn10'])) {
 
 ?>
         <form action="" method="post" enctype="multipart/form-data">
-            ISBN10:<br>
-            <input type="text" size="40" maxlength="10" name="isbn10"><br><br>
-            ISBN13:<br>
-            <input type="text" size="40" maxlength="13" name="isbn13"><br><br>
-            Titel:<br>
-            <input type="text" size="40" maxlength="50" name="titel"><br><br>
-            Autor:<br>
-            <input type="text" size="40" maxlength="50" name="autor"><br><br>
-            <input type="file" name="datei"/><br><br>
-            <input type="submit" value="Abschicken">
+        <div class="container">
+            <label for="isbn10"><b>ISBN10</b></label>
+            <input type="text" size="40" maxlength="10" name="isbn10" required>
+            <label for="isbn13"><b>ISBN13</b></label>
+            <input type="text" size="40" maxlength="13" name="isbn13" required>
+            <label for="titel"><b>Titel</b></label>
+            <input type="text" size="40" maxlength="50" name="titel" required>
+            <label for="autor"><b>Autor</b></label>
+            <input type="text" size="40" maxlength="50" name="autor" required>
+            <input type="file" name="datei" id="datei" required/>
+            <button type="submit">Abschicken</button>
+        </div>
         </form>
     </body>
 </html>

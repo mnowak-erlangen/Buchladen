@@ -1,22 +1,22 @@
 <?php
 session_start();
 if(!isset($_SESSION['userid']) && !isset($_SESSION['isAdmin'])) {
-    die('Bitte loggen Sie sich zuerst ein. <a href="login.php">Zum Login</a>.');
+    die('Bitte loggen Sie sich zuerst ein. <a href="../index.php">Zum Login</a>.');
     ?>
     <script language="JavaScript" type="text/javascript">
-        setTimeout("location.href='login.php'", 1000);
+        setTimeout("location.href='index.php'", 1000);
     </script>
     <?php
 }
+$db = mysqli_connect("localhost", "root", "", "buchladen");
 //Abfrage der Nutzer ID vom Login
 $userid = $_SESSION['userid'];
-
-$db = mysqli_connect("localhost", "root", "", "buchladen");
 ?>
 <!DOCTYPE html> 
 <html> 
     <head>
-        <title>Buchladen</title>    
+        <title>Buchladen</title>  
+        <link rel="stylesheet" href="../tabelle.css" type="text/css"></link>    
     <?php
         if (isset($_GET['isbn'])) {
             $isbn13 = $_GET['isbn'];
@@ -39,7 +39,6 @@ $db = mysqli_connect("localhost", "root", "", "buchladen");
             } else {
                 echo "<script>alert('Das Buch " . $isbn13 . " konnte nicht gelöscht werden!');</script>";
             }
-
         }
 
         $statement = "SELECT * FROM buecher;";
@@ -48,13 +47,12 @@ $db = mysqli_connect("localhost", "root", "", "buchladen");
     </head> 
     <body>
         <p><a href="../logout.php">Logout</a> <a href="hochladen.php">neues Buch hochladen</a></p>
-        <table>
+        <table >
             <tr>
                 <th>ISBN10</th>
                 <th>ISBN13</th>
                 <th>Titel</th>
                 <th>Autor</th>
-                <th>Verzeichnispfad</th>
                 <th>bearbeitet von</th>
                 <th>bearbeitet am</th>
                 <th></th>
@@ -68,7 +66,6 @@ $db = mysqli_connect("localhost", "root", "", "buchladen");
         echo "<td>" . $row[$zaehler][1] . "</td>";
         echo "<td>" . $row[$zaehler][2] . "</td>";
         echo "<td>" . $row[$zaehler][3] . "</td>";
-        echo "<td>" . $row[$zaehler][4] . "</td>";
         echo "<td>" . $row[$zaehler][5] . "</td>";
         echo "<td>" . $row[$zaehler][6] . "</td>";
         echo "<td><button onclick=\"window.location.href = 'ansicht.php?isbn=" . $row[$zaehler][1] . "';\">Löschen</button></td>";

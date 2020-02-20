@@ -1,10 +1,10 @@
 <?php
 session_start();
 if(!isset($_SESSION['userid'])) {
-    die('Bitte loggen Sie sich zuerst ein. <a href="login.php">Zum Login</a>.');
+    die('Bitte loggen Sie sich zuerst ein. <a href="../index.php">Zum Login</a>.');
     ?>
     <script language="JavaScript" type="text/javascript">
-        setTimeout("location.href='login.php'", 1000);
+        setTimeout("location.href='index.php'", 1000);
     </script>
     <?php
 }
@@ -27,14 +27,16 @@ $result = mysqli_query($db, $statement);
 <html> 
     <head>
         <title>Buchladen</title>    
+        <link rel="stylesheet" href="../tabelle.css" type="text/css"></link>  
     </head> 
     <body>
         <p><a href="../logout.php">Logout</a> <a href="hinzufuegen.php">Neue Bücher hinzufügen</a></p>
-        <table>
+        <table >
             <tr>
                 <th>Titel</th>
                 <th>Autor</th>
                 <th>Dein Lesezeichen</th>
+                <th></th>
             </tr>
 <?php
     $row = mysqli_fetch_all($result);
