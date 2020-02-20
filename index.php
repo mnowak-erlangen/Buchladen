@@ -6,11 +6,11 @@ if(isset($_GET['login'])) {
     $benutzerid = $_POST['uname'];
     $passwort = $_POST['psw'];
 
-    $statement = "SELECT count(*) as 'Eintrag' FROM kunde WHERE benutzerid like '$benutzerid' AND passwort like '$passwort';";
+    $statement = "SELECT passwort as 'Eintrag' FROM kunde WHERE benutzerid like '$benutzerid';";
     $result = mysqli_query($db, $statement);
 
     $eintrag = mysqli_fetch_assoc($result);
-    if ($eintrag['Eintrag'] == 1) {
+    if (password_verify($passwort, $eintrag['Eintrag'])) {
         $_SESSION['userid'] = $benutzerid;
         $statement = "SELECT count(*) as 'isAdmin' FROM kunde WHERE benutzerid like '$benutzerid' AND passwort like '$passwort' AND isAdmin = 1";
         $result = mysqli_query($db, $statement);

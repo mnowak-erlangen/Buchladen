@@ -14,7 +14,7 @@
 if(isset($_GET['register'])) {
     $vorhanden = false;
 
-    $benutzerid = $_POST['benutzerid'];
+    $benutzerid = $_POST['uname'];
     $email = $_POST['email'];
     $vorname = $_POST['vorname'];
     $nachname = $_POST['nachname'];
@@ -24,9 +24,7 @@ if(isset($_GET['register'])) {
     $hausnr = $_POST['hausnr'];
     $email = $_POST['email'];
     
-    $passwort = $_POST['passwort'];
-    $passwort2 = $_POST['passwort2'];
-
+    $passwort = $_POST['psw'];
 
     //Überprüfe, dass der Nutzername noch nicht registriert wurde
     $statement = "SELECT count(*) as 'Eintrag' FROM kunde WHERE benutzerid = '$benutzerid'";
@@ -46,6 +44,8 @@ if(isset($_GET['register'])) {
         echo 'Diese E-Mail-Adresse ist bereits vergeben<br>';
         $vorhanden = true;
     }
+
+    $passwort = password_hash($passwort, PASSWORD_BCRYPT);
 
     if ($vorhanden == false) {
         $statement = "INSERT INTO kunde VALUES ('$benutzerid', '$passwort', '$vorname', '$nachname', '$strasse', '$hausnr', '$plz', '$ort', '$email', 0);";
@@ -88,8 +88,6 @@ if(isset($_GET['register'])) {
                 <input type="email" maxlength="50" name="email" required>
                 <label for="psw"><b>Passwort</b></label>
                 <input type="password" maxlength="250" name="psw" required>
-                <label for="psw2"><b>Passwort wiederholen</b></label>
-                <input type="password" maxlength="250" name="psw2" required>
                 
                 <button type="submit">Registrieren</button>
                 <div class="container" style="background-color:#f1f1f1">
