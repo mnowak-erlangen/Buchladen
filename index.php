@@ -55,10 +55,10 @@ if(isset($errorMessage)) {
                 <img src="images/avatar.png" alt="Avatar" class="avatar">
             </div>
             <div class="container">
-                <label for="uname"><b>Username</b></label>
+                <label for="uname"><b>Benutzername</b></label>
                 <input type="text" maxlength="50" name="uname" required>
 
-                <label for="psw"><b>Password</b></label>
+                <label for="psw"><b>Passwort</b></label>
                 <input type="password"  maxlength="250" name="psw" required>
 
                 <button type="submit">Login</button>
