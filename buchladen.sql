@@ -39,8 +39,8 @@ CREATE TABLE `kunde` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `kunde` (`BenutzerID`, `Passwort`, `Vorname`, `Nachname`, `Strasse`, `Hausnr`, `PLZ`, `Ort`, `EMAIL`, `isAdmin`) VALUES
-('admin', 'admin', 'Admin', 'Der Admin', 'Adminstrasse', '2', '10101', 'Adminhausen', 'admin@admin.de', 1),
-('kunde', 'kunde', 'kunde', 'kunde', 'kunde', '1', '00000', 'Kundestadt', 'kunde@kunde.de', 0);
+('admin', '$2y$10$7aCHm.JfTCLwYyIQTWVnAu7T6/o/0h3vMagcG7pVujV8ofTEzxv1u', 'Admin', 'Der Admin', 'Adminstrasse', '2', '10101', 'Adminhausen', 'admin@admin.de', 1),
+('kunde', '$2y$10$65vhl1CQVKVm/WuFLiXH4eHPAVNXCAO6l.1YSvpc3m/JdfVTNzqc.', 'kunde', 'kunde', 'kunde', '1', '00000', 'Kundestadt', 'kunde@kunde.de', 0);
 
 CREATE TABLE `kundebuecher` (
   `BenutzerID` varchar(50) NOT NULL,
@@ -50,6 +50,7 @@ CREATE TABLE `kundebuecher` (
 
 INSERT INTO `kundebuecher` (`BenutzerID`, `ISBN13`, `Lesezeichen`) VALUES
 ('admin', '1111111111111', 0),
+('admin', '4444444444444', 0),
 ('kunde', '4444444444444', 0),
 ('kunde', '4445556669990', 0),
 ('kunde', '9876543210321', 1);
